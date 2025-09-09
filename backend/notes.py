@@ -1,0 +1,32 @@
+# MONGODB Structure:
+# Client -> Databases -> Collections -> Individual Documents (contain json similar data)
+# We call Client['database'] to enter. Then navigate through collections & documents for data.
+
+# Documents need to be "found" using this func before you can print them. collection.find_one() returns the first. 
+# Otherwise you need to query for the rest.
+# You can chose to either use .find_one() or do find() to return all possible matches.
+# document = collection.find_one()
+# print(document['_id'], document['email'])
+
+# # collection.find() is like opening the folder. Then all the documents will be accessible.
+# users = collection.find()
+# # Print all users
+# for document in users:
+#     print(document)
+
+# # To search by id you need to user the ObjectID() wrapper from bson.objectid
+# robert = collection.find_one({'_id': ObjectId("id you copied from mongodb")})
+# print(robert)
+
+# # If you want to find multiple of the same doc just use .find() It will return a list sort of
+# jay_doc = collection.find({'name': 'Jay Noppone'})
+# for x in jay_doc:
+#     print(x)
+
+# UPDATE PROCESS:
+# restaurants = database["restaurants"]
+# query_filter = {'name' : 'Bagels N Buns'}
+# update_operation = { '$set' : 
+#     { 'name' : '2 Bagels 2 Buns' }
+# }
+# result = restaurants.update_one(query_filter, update_operation)
