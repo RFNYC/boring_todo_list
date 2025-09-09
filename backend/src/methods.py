@@ -27,6 +27,8 @@ except Exception as e:
 database = client['oel_users']
 collection = database['registry']
 
+# After creating a user you should immediately make a call to get that person's ID and then probably
+# save it locally or somewhere they can easily access so that u dont have to make extra api calls when updating their account.
 def createUser(name, email, register):
     collection.insert_one( 
     {

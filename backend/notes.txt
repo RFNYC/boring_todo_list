@@ -34,3 +34,28 @@ result = restaurants.update_one(query_filter, update_operation)
 
 Basically each endpoint on flask is its own function. If you reach that endpoint youll run any code associated with it.
 This lets flask be the middle man between react & javascript :vomit: and python (blessed)
+
+
+This block of code describes an endpoint called registry which is what we'll be making calls to.
+If the api call is a GET request then it'll obviously return the GET block.
+
+@app.route("/registry", methods=['GET', 'POST'])
+def registry():
+    if request.method == "GET":
+        print("GET request received.")
+        return "<p>Registry GET</p>"
+    
+
+    If its a POST request, request.data.decode() takes the posted content and converts it into a readable string
+    Since we can expect that readable string to be JSON we use the JSON library to convert it into something we can
+    easily sift through. 
+
+    **request.data.decode** works for RAW data, there are other methods for the different types of post content.
+
+    elif request.method == "POST":
+        print("POST request recieved")
+        x = request.data.decode()
+        x = json.loads(x)
+
+        print(x['name'])
+        return "<p>Registry POST</p>"
