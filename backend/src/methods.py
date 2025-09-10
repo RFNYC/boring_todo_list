@@ -26,6 +26,7 @@ except Exception as e:
 
 database = client['oel_users']
 collection = database['registry']
+collection2 = database['assignments']
 
 # After creating a user you should immediately make a call to get that person's ID and then probably
 # save it locally or somewhere they can easily access so that u dont have to make extra api calls when updating their account.
@@ -37,11 +38,29 @@ def createUser(name, email, register):
         'register-date:': f'{register}'
     }
 )
+    
+def createAssignment(task, context, assignor, assignee_name, assignee_id, date_assigned):
+    collection2.insert_one( 
+    {
+        'task': f'{task}',
+        'context': f'{context}',
+        'assignor': f'{assignor}',
+        'assignee-name': f'{assignee_name}',
+        'assignee-id': f'{assignee_id}',
+        'date-assigned': f'{date_assigned}'
+    }
+)
 
 # MongoDB generates a unique ID for each entry. So long as its provided the right one this should be fine.
-def deleteUser(id):
+# Since you're going to reuse this func maybe create a log of what each thing actually was and pin it to the ID?
+def deleteUserEntry(id):
     collection.delete_one( {'_id': ObjectId(id)} )
-    print(f'Successfully deleted user: {id}')
+    print(f'Successfully deleted: {id}')
+
+# was too lazy to figure out the logic to keep this in one func :sob:
+def deleteAssignmentEntry(id):
+    collection2.delete_one( {'_id': ObjectId(id)} )
+    print(f'Successfully deleted: {id}')
 
 def updateUser(id, request):
     # Request will be a tuple/array with a request code 1 or 2, and a piece of information
