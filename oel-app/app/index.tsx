@@ -82,9 +82,29 @@ const Index = () => {
     let number_of_tasks = currentData.length
 
     // currentData is 0th indexed so just add to the end by taking the length of the array/object.
-    currentData[number_of_tasks] = "hi"
+    currentData[number_of_tasks] = JSON.parse(task)
     storeData(JSON.stringify(currentData))
     console.log(currentData)
+
+    console.log(task)
+    setList(currentData)
+  }
+
+
+  const CreateTask = () => {
+    return(
+      <View>
+        <TextInput
+            style={styles.input}
+            placeholder="add a task"
+            onSubmitEditing={(event) => { console.log( event.nativeEvent.text), setTask(event.nativeEvent.text) } }
+            enablesReturnKeyAutomatically={false}
+          />
+          <Pressable onPress={() => handleAdd()}>
+            <Text>Add to list</Text>
+          </Pressable>
+      </View>
+    )
   }
 
   return (
@@ -117,14 +137,7 @@ const Index = () => {
       <Pressable onPress={() => {setList(refill), storeData(JSON.stringify(refill))}}>
         <Text>Refill data</Text>
       </Pressable>
-      <View>
-        <TextInput
-            style={styles.input}
-            placeholder="add a task"
-            onEndEditing={() => (console.log("finished adding task"), handleAdd())}
-            onBlur={() => (console.log("unfocused"))}
-          />
-      </View>
+      <CreateTask></CreateTask>
     </View>
   </>
   )
