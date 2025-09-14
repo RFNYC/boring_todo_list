@@ -2,7 +2,6 @@ import { Pressable, Text, TouchableOpacity, View, StyleSheet, TextInput } from "
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { event } from "react-native/types_generated/Libraries/Animated/AnimatedExports";
 
 const storeData = async (value: string) => {
   try {

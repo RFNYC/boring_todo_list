@@ -1,10 +1,12 @@
 from methods import createUser, deleteUserEntry, deleteAssignmentEntry, updateUser, createAssignment
 from flask import Flask
+from flask_cors import CORS
 from flask import request
 import json
 #https://flask.palletsprojects.com/en/stable/quickstart/#variable-rules:~:text=different%20HTTP%20methods.-,from%20flask%20import%20request,-%40app.route
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def hello_world():
@@ -62,7 +64,8 @@ def update():
 def assignments():
     if request.method == "GET":
         print("GET request received.")
-        return "<p>Assignment GET</p>"
+        info = '{"request":"create","info":{"task":"Final response instructions","context":"I dont wanna do this shit","assignee:":"self","assignor":"user","assignee-name":"GenAI Assistant","assignee-id":"68c059d795678aa6fe109086","date-assigned":"Wednesday, September 10, 2025"}}'
+        return f'{info}'
     
     elif request.method == "POST":
         print("POST request recieved")
