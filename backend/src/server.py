@@ -83,9 +83,9 @@ def assignments():
                     task = info['task'], 
                     context = info['context'], 
                     assignor = info['assignor'],
-                    assignee_name = info['assignee-name'], 
-                    assignee_id = info['assignee-id'],
-                    date_assigned = info['date-assigned']
+                    assignee_name = info['assignee_name'], 
+                    assignee_id = info['assignee_id'],
+                    date_assigned = info['date_assigned']
                 )    
 
 

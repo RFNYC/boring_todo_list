@@ -40,7 +40,7 @@ def createUser(name, email, register):
 )
     
 def createAssignment(task, context, assignor, assignee_name, assignee_id, date_assigned):
-    collection2.insert_one( 
+    my_result = collection2.insert_one( 
     {
         'task': f'{task}',
         'context': f'{context}',
@@ -50,6 +50,9 @@ def createAssignment(task, context, assignor, assignee_name, assignee_id, date_a
         'date-assigned': f'{date_assigned}'
     }
 )
+    print("this is the id for the thing u just generated -> ", my_result.inserted_id)
+   
+
 
 # MongoDB generates a unique ID for each entry. So long as its provided the right one this should be fine.
 # Since you're going to reuse this func maybe create a log of what each thing actually was and pin it to the ID?
