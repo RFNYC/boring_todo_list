@@ -1,4 +1,4 @@
-from methods import createUser, deleteUserEntry, deleteAssignmentEntry, updateUser, createAssignment
+from methods import createUser, deleteUserEntry, deleteAssignmentEntry, loginUser, updateUser, createAssignment
 from flask import Flask
 from flask_cors import CORS
 from flask import request
@@ -30,10 +30,28 @@ def user():
             info = user['info']
 
             try:
+                # check for existing email first
+
                 createUser(info['name'], info['email-address'], info['register-date'])
                 print("User created successfully.")
             except:
                 print("Create request could not be fulfilled.")
+
+        elif user['request'] == "login":
+            print("login request")
+            info = user["info"]
+
+            email = info["email-address"]
+            password = info["password"]
+
+            print(email, password)
+
+            try:
+                print("login request was sent.")
+                loginUser(email, password)
+            except:
+                print("login request could not be sent.")
+
         else:
             print("Delete request")
             id = user["_id"]

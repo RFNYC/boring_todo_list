@@ -52,8 +52,6 @@ def createAssignment(task, context, assignor, assignee_name, assignee_id, date_a
 )
     print("this is the id for the thing u just generated -> ", my_result.inserted_id)
    
-
-
 # MongoDB generates a unique ID for each entry. So long as its provided the right one this should be fine.
 # Since you're going to reuse this func maybe create a log of what each thing actually was and pin it to the ID?
 def deleteUserEntry(id):
@@ -88,3 +86,26 @@ def updateUser(id, request):
         
     collection.update_one(query_filter, update_operation)
 
+def findUser(email):
+    query = { 'email-address' : email }
+    user_doc = collection.find(query)
+
+    return user_doc
+
+def loginUser(email, password):
+    user_doc = findUser(email)
+    
+    try:
+    
+        for x in user_doc:
+            # if you print x it returns the entire object, we're just indexing it here.
+            fetched_password = x['password']
+
+        if fetched_password == password:
+            print("match found, grant access")
+        else:
+            print("match not found, deny access")
+            pass
+
+    except Exception as e:
+        print(f"Failed to retrieve user. Error: {e}")
