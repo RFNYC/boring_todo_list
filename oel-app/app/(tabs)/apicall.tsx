@@ -3,14 +3,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 
+
 //-------------------
 
 const apicall = () => {
 
+    // takes frm .env file from OEL's root directory.
+    const BETA = process.env.EXPO_PUBLIC_BETA;
+
   const makeGETcall = () => {
     // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
     // making a post request instead.
-    return fetch('http://127.0.0.1:5000/assignments')
+    return fetch(`http://192.168.${BETA}:5000/assignments`)
       .then(response => response.json())
       .then(json => {
         console.log(json)
@@ -26,7 +30,7 @@ const apicall = () => {
   const makeCreatePOSTcall = () => {
     // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
     // making a post request instead.
-    return fetch('http://127.0.0.1:5000/assignments', {
+    return fetch(`http://192.168.${BETA}:5000/assignments`, {
       method: "POST",
       headers: {
         // tells the server that react will only accept JSON as a response
@@ -62,7 +66,7 @@ const apicall = () => {
   const makeDeletePOSTcall = () => {
     // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
     // making a post request instead.
-    return fetch('http://127.0.0.1:5000/assignments', {
+    return fetch(`http://192.168.${BETA}:5000/assignments`, {
       method: "POST",
       headers: {
         // tells the server that react will only accept JSON as a response
@@ -72,7 +76,7 @@ const apicall = () => {
       },
       body: JSON.stringify({
         request: "delete",
-        _id: "68c83c7a4cdf7d4d22a20976"
+        _id: "68ca24081353c38d196e704c"
       })
 
     })

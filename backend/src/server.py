@@ -123,3 +123,10 @@ def assignments():
 
         return "<p>Assignment POST</p>"
     pass
+
+# This block ensures the server runs only when the script is executed directly
+if __name__ == '__main__':
+    # The debug=True argument enables the debugger and auto-reloader
+    # The host='0.0.0.0' makes the server publicly accessible
+    app.run(host='0.0.0.0', port=5000,  debug=True)
+
