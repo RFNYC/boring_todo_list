@@ -5,7 +5,7 @@ import { FlatList } from "react-native";
 
 //-------------------
 
-const Index = () => {
+const apicall = () => {
 
   const makeGETcall = () => {
     // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Index;
+export default apicall;
