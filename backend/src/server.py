@@ -1,8 +1,9 @@
-from methods import createUser, deleteUserEntry, deleteAssignmentEntry, loginUser, updateUser, createAssignment
+from methods import createUser, deleteUserEntry, deleteAssignmentEntry, loginUser, updateUser, createAssignment, checkUserExists
 from flask import Flask
 from flask_cors import CORS
 from flask import request
 import json
+import datetime
 #https://flask.palletsprojects.com/en/stable/quickstart/#variable-rules:~:text=different%20HTTP%20methods.-,from%20flask%20import%20request,-%40app.route
 
 app = Flask(__name__)
@@ -24,18 +25,19 @@ def user():
         user = request.data.decode()
         user = json.loads(user)
 
-        # other elifs can be added later
         if user['request'] == "create":
             print("create request")
             info = user['info']
 
-            try:
-                # check for existing email first
-
-                createUser(info['name'], info['email-address'], info['register-date'])
+            # check for existing email first
+            if checkUserExists(info['email-address']) == True:
+                # if flask is unable to fetch a password for the given email address it likely doesn't exist.
+                print("This email is already associated with another account. Please try another.")
+                
+            else:
+                # when it fails we'll create a user.
+                createUser(info['name'], info['email-address'], info['password'], datetime.datetime.now())
                 print("User created successfully.")
-            except:
-                print("Create request could not be fulfilled.")
 
         elif user['request'] == "login":
             print("login request")

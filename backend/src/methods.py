@@ -30,14 +30,16 @@ collection2 = database['assignments']
 
 # After creating a user you should immediately make a call to get that person's ID and then probably
 # save it locally or somewhere they can easily access so that u dont have to make extra api calls when updating their account.
-def createUser(name, email, register):
-    collection.insert_one( 
+def createUser(name, email, password, register):
+    my_result = collection.insert_one( 
     {
         'name': f'{name}',
         'email-address': f'{email}',
+        'password': f'{password}',
         'register-date:': f'{register}'
     }
 )
+    print("This is your user ID: ", my_result.inserted_id)
     
 def createAssignment(task, context, assignor, assignee_name, assignee_id, date_assigned):
     my_result = collection2.insert_one( 
@@ -86,12 +88,15 @@ def updateUser(id, request):
         
     collection.update_one(query_filter, update_operation)
 
-def findUser(email):
+def checkUserExists(email):
+    # Counting the # of documents where the query matches, stopping at the first instance.
     query = { 'email-address' : email }
-    user_doc = collection.find(query)
 
-    return user_doc
-
+    if collection.count_documents(query, limit=1):
+        return True
+    else:
+        return False
+    
 def loginUser(email, password):
     user_doc = findUser(email)
     

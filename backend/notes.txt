@@ -23,6 +23,13 @@ jay_doc = collection.find({'name': 'Jay Noppone'})
 for x in jay_doc:
     print(x)
 
+Check if a document exists:
+myquery = { 'email-address' : "sam@gmail.com" }
+if collection.count_documents(myquery, limit=1):
+    print("Match was found")
+else:
+    print("No match was found.")
+
 UPDATE PROCESS:
 restaurants = database["restaurants"]
 query_filter = {'name' : 'Bagels N Buns'}

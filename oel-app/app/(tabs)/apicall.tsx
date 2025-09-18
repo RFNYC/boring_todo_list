@@ -57,7 +57,8 @@ const apicall = () => {
         return json;
       })
       .catch(error => {
-        console.error(error);
+        // console.error(error);
+        console.log("...")
       });
 
 
@@ -76,7 +77,7 @@ const apicall = () => {
       },
       body: JSON.stringify({
         request: "delete",
-        _id: "68ca24081353c38d196e704c"
+        _id: "68cb86f392be78e5ec722497"
       })
 
     })
@@ -86,7 +87,8 @@ const apicall = () => {
         return json;
       })
       .catch(error => {
-        console.error(error);
+        // console.error(error);
+        console.log("...")
       });
 
 
