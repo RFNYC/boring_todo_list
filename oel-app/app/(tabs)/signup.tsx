@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Text, View,  StyleSheet, TextInput, Pressable } from 'react-native';
 
-
+// **before doing UI design ensure you have password confirmation/deny working.
 
 export default function signup() {
 
@@ -10,7 +10,7 @@ export default function signup() {
 
     const [name, setName] = useState('Enter your name')
     const [email, setEmail] = useState('Enter your email address')
-    const [password, setPassword] = useState('Enter your password')
+    const [my_password, setPassword] = useState('Enter your password')
     const [confirmPassword, setConfirm] = useState('Enter your confirmed password')
 
     const makeCreatePOSTcall = (user_name: string, email_address: string, my_password: string) => {
@@ -45,14 +45,17 @@ export default function signup() {
         });
       }
 
-    const signUpPressed = () => {
-      if (password == confirmPassword) {
-        
-      } else {
-        console.log("Make sure your passwords match!")
-      }
+      const checkPassword = (password: string, password2: string, user_name: string, email_address: string) => {
+        if (password == password2){
+          console.log("Passwords matched.")
 
-    }
+          // on match *THEN* we allow signup to happen.
+          makeCreatePOSTcall(user_name, email_address, password)
+
+        } else {
+          console.log("Passwords didn't match, try again.")
+        }
+      }
 
   const InputBoxes = ({ setName, setEmail, setPassword, setConfirm }) => {
   return(
@@ -69,7 +72,7 @@ export default function signup() {
       />
       <TextInput
         style={styles.input}
-        placeholder={password}
+        placeholder={my_password}
         onSubmitEditing={(event) => {setPassword(event.nativeEvent.text)}}
       />
       <TextInput
@@ -85,12 +88,14 @@ export default function signup() {
     <View style={styles.container}>
       <Text style={styles.text}>Home screen</Text>
       <InputBoxes setName={setName} setPassword={setPassword} setConfirm={setConfirm} setEmail={setEmail}/>
-      <Pressable onPress={() => makeCreatePOSTcall(name, email, password)}>
+      <Pressable onPress={() => checkPassword(my_password, confirmPassword, name, email)}>
         <Text>Sign up!</Text>
       </Pressable>
     </View>
   );
 }
+
+// makeCreatePOSTcall(name, email, my_password)
 
 const styles = StyleSheet.create({
   container: {

@@ -98,19 +98,17 @@ def checkUserExists(email):
         return False
     
 def loginUser(email, password):
-    user_doc = findUser(email)
-    
-    try:
-    
-        for x in user_doc:
-            # if you print x it returns the entire object, we're just indexing it here.
+    if checkUserExists(email) == True:
+        query = { 'email-address' : email }
+        
+        user = collection.find(query)
+        for x in user:
             fetched_password = x['password']
-
-        if fetched_password == password:
-            print("match found, grant access")
+        
+        if password == fetched_password:
+            print("login success.")
         else:
-            print("match not found, deny access")
-            pass
+            print("access denied.")
 
-    except Exception as e:
-        print(f"Failed to retrieve user. Error: {e}")
+    else:
+        print("User not found, check your email.")

@@ -46,8 +46,6 @@ def user():
             email = info["email-address"]
             password = info["password"]
 
-            print(email, password)
-
             try:
                 print("login request was sent.")
                 loginUser(email, password)
