@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { Text, View,  StyleSheet, TextInput, Pressable } from 'react-native';
 
 // **before doing UI design ensure you have password confirmation/deny working.
 
 export default function signup() {
+    // Allows us to call router and its methods
+    const router = useRouter();
 
     // takes frm .env file from OEL's root directory.
     const BETA = process.env.EXPO_PUBLIC_BETA;
@@ -45,13 +48,16 @@ export default function signup() {
         });
       }
 
-      const checkPassword = (password: string, password2: string, user_name: string, email_address: string) => {
+      const checkPassword = async (password: string, password2: string, user_name: string, email_address: string) => {
         if (password == password2){
           console.log("Passwords matched.")
 
-          // on match *THEN* we allow signup to happen.
-          makeCreatePOSTcall(user_name, email_address, password)
-
+          let result = await makeCreatePOSTcall(user_name, email_address, password)
+          if (result['signUp'] == true){
+            router.navigate('/')
+          } else {
+            console.log("Login unsuccesssful please try again.")
+          }
         } else {
           console.log("Passwords didn't match, try again.")
         }

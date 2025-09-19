@@ -1,8 +1,11 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Text, View,  StyleSheet, TextInput, Pressable } from 'react-native';
 
 
+
 export default function login() {
+    const router = useRouter();
 
     // takes frm .env file from OEL's root directory.
     const BETA = process.env.EXPO_PUBLIC_BETA;
@@ -36,6 +39,16 @@ export default function login() {
           console.log("...")
         });
       }
+    
+  // this func ordinarilly returns a promise so you need to make it asynchronous and await that response before printing
+  const handleLogin = async (email_address: string, my_password: string) => {
+    let result = await makeCreatePOSTcall(email_address, my_password)
+    if (result['login'] == true){
+      router.navigate('/')
+    } else {
+      console.log("Login unsuccesssful please try again.")
+    }
+  }
 
   const InputBoxes = ({ setEmail, setPassword }) => {
   return(
@@ -60,7 +73,7 @@ export default function login() {
     <View style={styles.container}>
       <Text style={styles.text}>Home screen</Text>
       <InputBoxes setPassword={setPassword} setEmail={setEmail}/>
-      <Pressable onPress={() => makeCreatePOSTcall(email, password)}>
+      <Pressable onPress={() => handleLogin(email, password)}>
         <Text>Login!</Text>
       </Pressable>
     </View>
