@@ -39,7 +39,10 @@ def createUser(name, email, password, register):
         'register-date:': f'{register}'
     }
 )
+    # Gives flask something to send back to react via object.
     print("This is your user ID: ", my_result.inserted_id)
+    new_user_id = my_result.inserted_id
+    return new_user_id
     
 def createAssignment(task, context, assignor, assignee_name, assignee_id, date_assigned):
     my_result = collection2.insert_one( 
@@ -52,7 +55,9 @@ def createAssignment(task, context, assignor, assignee_name, assignee_id, date_a
         'date-assigned': f'{date_assigned}'
     }
 )
-    print("this is the id for the thing u just generated -> ", my_result.inserted_id)
+    print("This is your assignment ID -> ", my_result.inserted_id)
+    new_assignment_id = my_result.inserted_id
+    return new_assignment_id
    
 # MongoDB generates a unique ID for each entry. So long as its provided the right one this should be fine.
 # Since you're going to reuse this func maybe create a log of what each thing actually was and pin it to the ID?
@@ -107,8 +112,10 @@ def loginUser(email, password):
         
         if password == fetched_password:
             print("login success.")
+            return True
         else:
             print("access denied.")
+            return False
 
     else:
         print("User not found, check your email.")

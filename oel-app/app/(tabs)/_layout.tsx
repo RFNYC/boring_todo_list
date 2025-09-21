@@ -24,7 +24,13 @@ export default function TabLayout() {
         name="login"
         options={{
           title: 'login',
+          animation: "shift",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          headerShown: false,
+          href: null,
+          tabBarStyle: {
+            display: 'none'
+          }
         }}
       />
 
@@ -32,7 +38,13 @@ export default function TabLayout() {
         name="signup"
         options={{
           title: 'signup',
+          animation: "shift",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          headerShown: false,
+          // href: null,
+          tabBarStyle: {
+            display: 'none'
+          }
         }}
       />
     </Tabs>

@@ -1,10 +1,20 @@
+import os
+from dotenv import find_dotenv, load_dotenv
 from methods import createUser, deleteUserEntry, deleteAssignmentEntry, loginUser, updateUser, createAssignment, checkUserExists
 from flask import Flask
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from flask import request
 import json
 import datetime
 #https://flask.palletsprojects.com/en/stable/quickstart/#variable-rules:~:text=different%20HTTP%20methods.-,from%20flask%20import%20request,-%40app.route
+
+#Automatically finds the .env path regardless of location
+dotenv_path = find_dotenv()
+
+# Loads environment vars found at .env
+load_dotenv(dotenv_path)
+
+key = os.getenv('EXPO_PUBLIC_BETA')
 
 app = Flask(__name__)
 CORS(app)
@@ -15,6 +25,7 @@ def hello_world():
     return "<p>Index</p>"
 
 @app.route("/user", methods=['GET','POST'])
+@cross_origin()
 def user():
     if request.method == "GET":
         print("GET request received.")
@@ -36,8 +47,15 @@ def user():
                 
             else:
                 # when it fails we'll create a user.
-                createUser(info['name'], info['email-address'], info['password'], datetime.datetime.now())
+                print("reached 9/21")
+                result = createUser(info['name'], info['email-address'], info['password'], datetime.datetime.now())
+
+                response = {
+                    "signUp": True,
+                }
+
                 print("User created successfully.")
+                return response
 
         elif user['request'] == "login":
             print("login request")
@@ -48,7 +66,21 @@ def user():
 
             try:
                 print("login request was sent.")
-                loginUser(email, password)
+                result = loginUser(email, password)
+                
+                # Pivotal piece. You must send a response back to react via object so it can parse it as JSON and utilize this information.
+                # Not sending a response of some kind using an object will cause weird errors.
+                if result == True:
+                    response = {
+                        "login": True
+                    }
+                else:
+                    response = {
+                        "login": False
+                    }
+
+                return response
+
             except:
                 print("login request could not be sent.")
 
