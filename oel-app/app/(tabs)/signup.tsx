@@ -92,7 +92,7 @@ const ConfirmationButton =  ( {text_placeholder, confirmFunc} ) => {
 
 const PageRedirect = () => {
   return(
-    <View style={{flex:0.10, flexDirection:"row", justifyContent:"center"}}>
+    <View style={{flex:0.10, flexDirection:"row", justifyContent:"center", marginBottom:30}}>
       <Text style={{fontWeight:"100"}}>Already have an account?  </Text>
       <Pressable>
         <Link style={{ color: "#1e4663ff", fontWeight: "bold" }} href={'/login'}>Back to Sign In</Link>

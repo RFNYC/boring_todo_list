@@ -3,23 +3,7 @@ import { Tabs } from 'expo-router';
 
 export default function TabLayout() {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }}
-      />
-      
-      <Tabs.Screen
-        name="apicall"
-        options={{
-          title: 'apicall',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
-        }}
-      />
-
+    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }} initialRouteName='login'>
       <Tabs.Screen
         name="login"
         options={{
@@ -41,10 +25,27 @@ export default function TabLayout() {
           animation: "shift",
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
           headerShown: false,
-          // href: null,
+          href: null,
           tabBarStyle: {
             display: 'none'
           }
+        }}
+      />
+
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: 'Home',
+          animation:"shift",
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
+        }}
+      />
+      
+      <Tabs.Screen
+        name="apicall"
+        options={{
+          title: 'apicall',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
         }}
       />
     </Tabs>
