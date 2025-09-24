@@ -83,7 +83,11 @@ const InputBox = ({ setFunc, text_placeholder, heading_placeholder }) => {
 const ConfirmationButton =  ( {text_placeholder, confirmFunc} ) => {
   return(
     <View>
-      <Pressable style={styles.confirmButton} onPress={() => confirmFunc(my_password, confirmPassword, name, email)}>
+      <Pressable style={({pressed}) => [
+        styles.confirmButton,
+        { backgroundColor: pressed ? "#376a8eff" :'#1e4663ff'}
+      ]} 
+       onPress={() => confirmFunc(my_password, confirmPassword, name, email)}>
         <Text style={{color:"white"}}>{text_placeholder}</Text>
       </Pressable>
     </View>
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     // space inside an input box
     padding: "3.5%",
-    color: "#C6C6C6",
+    color: "#000000ff",
     fontWeight: "medium"
   },
   input_heading: {

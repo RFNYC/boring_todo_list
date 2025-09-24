@@ -53,7 +53,11 @@ export default function login() {
   const ConfirmationButton =  ( {text_placeholder, confirmFunc} ) => {
     return(
       <View>
-        <Pressable style={styles.confirmButton} onPress={() => confirmFunc(email, my_password)}>
+        <Pressable style={({pressed}) => [
+          styles.confirmButton,
+          { backgroundColor: pressed ? "#376a8eff" :'#1e4663ff'}
+        ]} 
+        onPress={() => confirmFunc(email, my_password)}>
           <Text style={{color:"white"}}>{text_placeholder}</Text>
         </Pressable>
       </View>
@@ -152,7 +156,6 @@ const styles = StyleSheet.create({
   confirmButton: {
     margin: "4%",
     marginTop: "20%",
-    backgroundColor: "#1e4663ff",
     padding: "3.5%",
     minWidth: "87%",
     borderRadius: 30,
