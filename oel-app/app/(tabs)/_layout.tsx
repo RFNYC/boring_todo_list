@@ -48,6 +48,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
         }}
       />
+
+      <Tabs.Screen
+        name="taskcomponent"
+        options={{
+          title: 'taskScreen2',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          headerShown: false
+        }}
+      />
     </Tabs>
   );
 }
