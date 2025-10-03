@@ -8,7 +8,7 @@ import { FlatList } from "react-native";
 const myTaskComponent = () => {
 
     
-const CustomDivider = ({ color = '#ccc', thickness = 1, style }) => {
+const CustomDivider = ({ color = '#b7b7b7ff', thickness = 1, style }) => {
   return (
     <View
       style={[
@@ -22,16 +22,21 @@ const CustomDivider = ({ color = '#ccc', thickness = 1, style }) => {
 
     const Helloworld = () => {
         return(
-            <View>
+            <View style={{width: '100%', flex: .7}}>
                 <StatusBar barStyle="dark-content" hidden={false} backgroundColor="#ffffff" />
-                <View style={{flex:1}}>
-                    <Text style={{fontSize:28, alignSelf:"center", marginTop:100}}>My Tasks</Text>
-                    <Text style={{color:"#9E9E9E", fontSize:12, marginTop:5}}>Conditional: No overdue tasks</Text>
+                {/* Content above the divider - set flex: 0.8 for half screen */}
+                <View style={{width: '100%', alignItems: 'center', paddingTop: 100, paddingBottom: 20, flex: 1, justifyContent: 'center'}}>
+                    <Text style={{fontSize:28}}>My Tasks</Text>
+                    <Text style={{color:"#9E9E9E", fontSize:12, marginTop:5}}>No overdue tasks</Text>
                 </View>
-                <View style={{flex:1}}>
-                    <Image source={require('../../assets/images/menu-symbol-button.png')} style={{width:25, height:20, marginBottom: 10}}/>
-                    <CustomDivider/>
-                    <Text>Hello world!</Text>
+                <Image source={require('../../assets/images/menu-symbol-button.png')} style={{width:25, height:17, marginBottom: 15, marginLeft:21}}/>
+
+                <CustomDivider/>
+                
+                {/* Content below the divider - set flex: 1 for the other half screen */}
+                <View style={{width: '100%', alignItems: 'center', paddingBottom: 20, flex: 1.1, justifyContent: 'center'}}>
+                    <Text style={{color:"#b7b7b7ff", fontSize: 20, fontWeight:"300", paddingBottom:10}}>Nothing here yet...</Text>
+                    <Text style={{width:"50%", textAlign:"center", color:"#c0bbbbff", fontSize:11}}>Tap the 3 lines to pull up the menu and add add a new task.</Text>
                 </View>
             </View>
         )
@@ -41,8 +46,9 @@ const CustomDivider = ({ color = '#ccc', thickness = 1, style }) => {
     <>
       <View
         style={{
+            flex: 1,
             backgroundColor:"#ffff",
-            alignItems: "center",
+            alignItems: 'center'
         }}
       >
         <Helloworld/>
@@ -59,8 +65,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   divider: {
-    width:"200%",
-    height: "1%"
+    width:"90%",
+    height: 1
   }
 });
 
