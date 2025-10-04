@@ -49,6 +49,7 @@ const Index = () => {
       let DATA = await getData()
 
       setList(DATA)
+      console.log(DATA)
     }
 
     fetchData()
@@ -133,6 +134,26 @@ const Index = () => {
     setList(currentData)
   }
 
+
+
+  const EXTRA_DATA = [
+    {
+      "id": "Task1",
+      "desc": "From placeholder data",
+      "date": "10/4/2025" 
+    },
+    {
+      "id": "Task2",
+      "desc": "From placeholder data",
+      "date": "10/4/2025" 
+    },
+    {
+      "id": "Task3",
+      "desc": "From placeholder data",
+      "date": "10/4/2025" 
+    },
+  ]
+
   return (
     <>
     <View
@@ -150,7 +171,7 @@ const Index = () => {
         <Text>get</Text>
       </Pressable>
       <Text>-----------------------------------------</Text>
-      <FlatList data={listData} renderItem={({item}) => (
+      <FlatList data={EXTRA_DATA} renderItem={({item}) => (
         <View>
           <Text>{item.id}</Text>
           <Text>{item.desc}</Text>
