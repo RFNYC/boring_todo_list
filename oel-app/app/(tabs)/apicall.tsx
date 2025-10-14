@@ -1,126 +1,68 @@
-import { Pressable, Text, TouchableOpacity, View, StyleSheet, TextInput } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useEffect, useState } from "react";
-import { FlatList } from "react-native";
-
-
-//-------------------
+import React, {useRef} from 'react';
+import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import {Animated, Text, View, StyleSheet, Button} from 'react-native';
 
 const apicall = () => {
+  // fadeAnim will be used as the value for opacity. Initial Value: 0
+  const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    // takes frm .env file from OEL's root directory.
-    const BETA = process.env.EXPO_PUBLIC_BETA;
-
-  const makeGETcall = () => {
-    // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
-    // making a post request instead.
-    return fetch(`http://192.168.${BETA}:5000/assignments`)
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        return json;
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  const fadeIn = () => {
+    // Will change fadeAnim value to 1 in 5 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 5000,
+      useNativeDriver: true,
+    }).start();
   };
 
-  makeGETcall()
-
-  const makeCreatePOSTcall = () => {
-    // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
-    // making a post request instead.
-    return fetch(`http://192.168.${BETA}:5000/assignments`, {
-      method: "POST",
-      headers: {
-        // tells the server that react will only accept JSON as a response
-        Accept: 'application/json',
-        // indicates the exact format of the data we're requesting to send?
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        request: "create",
-        info: {
-          task: "Move work from IOS to Electron and React Native",
-          context: "The organization is under full reshaping and we need this info moved over.",
-          assignor: "Jay's stupid ass job",
-          assignee_name: "Jay Noppone",
-          assignee_id: "68c059d795678aa6fe109086",
-          date_assigned: "Monday, September 15, 2025"
-        }
-      })
-
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        return json;
-      })
-      .catch(error => {
-        // console.error(error);
-        console.log("...")
-      });
-
-
-  };
-
-  const makeDeletePOSTcall = () => {
-    // fetch takes two arguments but usually you only see one. You may add an object containing specific headers or even specify that you're
-    // making a post request instead.
-    return fetch(`http://192.168.${BETA}:5000/assignments`, {
-      method: "POST",
-      headers: {
-        // tells the server that react will only accept JSON as a response
-        Accept: 'application/json',
-        // indicates the exact format of the data we're requesting to send?
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        request: "delete",
-        _id: "68cb86f392be78e5ec722497"
-      })
-
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json)
-        return json;
-      })
-      .catch(error => {
-        // console.error(error);
-        console.log("...")
-      });
-
-
+  const fadeOut = () => {
+    // Will change fadeAnim value to 0 in 3 seconds
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 3000,
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
-    <>
-      <View
-        style={{
-          flex: .8,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>Hello World!</Text>
-        <Pressable style={{ margin: 10 }} onPress={() => makeCreatePOSTcall()}>
-          <Text>Press to make a create post call.</Text>
-        </Pressable>
-        <Pressable style={{ margin: 10 }} onPress={() => makeDeletePOSTcall()}>
-          <Text>Press to make a delete post call.</Text>
-        </Pressable>
-      </View>
-    </>
-  )
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <Animated.View
+          style={[
+            styles.fadingContainer,
+            {
+              // Bind opacity to animated value
+              opacity: fadeAnim,
+            },
+          ]}>
+          <Text style={styles.fadingText}>Fading View!</Text>
+        </Animated.View>
+        <View style={styles.buttonRow}>
+          <Button title="Fade In View" onPress={fadeIn} />
+          <Button title="Fade Out View" onPress={fadeOut} />
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+  );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  fadingContainer: {
+    padding: 20,
+    backgroundColor: 'powderblue',
+  },
+  fadingText: {
+    fontSize: 28,
+  },
+  buttonRow: {
+    flexBasis: 100,
+    justifyContent: 'space-evenly',
+    marginVertical: 16,
   },
 });
 

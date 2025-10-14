@@ -9,12 +9,13 @@ export default function login() {
 
     // takes frm .env file from OEL's root directory.
     const BETA = process.env.EXPO_PUBLIC_BETA;
+    const SIGMA = process.env.EXPO_PUBLIC_SIGMA;
 
     const [email, setEmail] = useState('Enter your email address')
     const [my_password, setPassword] = useState('Enter your password')
 
     const makeCreatePOSTcall = (email_address: string, my_password: string) => {
-      return fetch(`http://192.168.${BETA}:5000/user`, {
+      return fetch(`http://${SIGMA}/user`, {
         method: "POST",
         headers: {
           Accept: 'application/json',

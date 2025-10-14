@@ -1,7 +1,10 @@
-import { Pressable, Text, TouchableOpacity, View, StyleSheet, TextInput } from "react-native";
+import { Pressable, Text, TouchableOpacity, View, StyleSheet, TextInput, Animated } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { FlatList } from "react-native";
+import React from "react";
+import { PaperProvider } from 'react-native-paper';
+import { IconButton, MD3Colors, List } from 'react-native-paper';
 
 const storeData = async (value: string) => {
   try {
@@ -26,6 +29,7 @@ const getData = async () => {
   }
   console.log("get data touched.")
 };
+
 
 
 //-------------------
@@ -134,25 +138,81 @@ const Index = () => {
     setList(currentData)
   }
 
+  /**
+ * @param {{isExpanded: boolean, children: React.ReactNode}} props
+ */
+const AnimatedAccordionContent = ({ isExpanded, children }) => {
+  // 1. Animated.Value to control the height
+  const animatedHeight = React.useRef(new Animated.Value(0)).current;
+  const [contentHeight, setContentHeight] = React.useState(0);
 
+  React.useEffect(() => {
+    if (contentHeight > 0) {
+      Animated.timing(animatedHeight, {
+        toValue: isExpanded ? contentHeight : 0,
+        duration: 300,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isExpanded, contentHeight, animatedHeight]);
 
-  const EXTRA_DATA = [
-    {
-      "id": "Task1",
-      "desc": "From placeholder data",
-      "date": "10/4/2025" 
-    },
-    {
-      "id": "Task2",
-      "desc": "From placeholder data",
-      "date": "10/4/2025" 
-    },
-    {
-      "id": "Task3",
-      "desc": "From placeholder data",
-      "date": "10/4/2025" 
-    },
-  ]
+  const onLayout = React.useCallback((event) => {
+    if (contentHeight === 0) {
+      setContentHeight(event.nativeEvent.layout.height);
+    }
+  }, [contentHeight]);
+
+  return (
+    <Animated.View style={[styles.animatedWrapper, { height: animatedHeight }]}>
+      <View onLayout={onLayout} style={styles.contentContainer}>
+        {children}
+      </View>
+    </Animated.View>
+  );
+};
+
+const ButtonComponent = ({listItem}) => (
+  <IconButton
+    // originates from "react native *material icons* "
+    icon="crop-square"
+    iconColor={MD3Colors.error0}
+    size={20}
+    onPress={() => handleDelete(listItem.id)}
+  />
+);
+
+const ListComponent = ({listItem}) => {
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handlePress = () => setExpanded(!expanded);
+
+  return (
+      <List.Accordion
+        title= {listItem.id}
+        left={props => <List.Icon {...props} icon="folder"/>}
+        description={listItem.date}
+        expanded={expanded}
+        onPress={handlePress}
+      >
+        <AnimatedAccordionContent isExpanded={expanded}>
+          <List.Item
+            left={props => <ButtonComponent listItem={listItem}/>}
+            descriptionNumberOfLines={10}
+            description={listItem.desc}
+          />
+        </AnimatedAccordionContent>
+      </List.Accordion>
+  );
+};
+
+const MyComponent = () => (
+  <IconButton
+    icon="camera"
+    iconColor={MD3Colors.error50}
+    size={20}
+    onPress={() => console.log('Pressed')}
+  />
+);
 
   return (
     <>
@@ -171,14 +231,9 @@ const Index = () => {
         <Text>get</Text>
       </Pressable>
       <Text>-----------------------------------------</Text>
-      <FlatList data={EXTRA_DATA} renderItem={({item}) => (
+      <FlatList data={listData} renderItem={({item}) => (
         <View>
-          <Text>{item.id}</Text>
-          <Text>{item.desc}</Text>
-          <Text>{item.date}</Text>
-          <Pressable onPress={() => handleDelete(item.id)}>
-            <Text>click to delete item</Text>
-          </Pressable>
+          <ListComponent listItem={item}/>
         </View>
       )}/>
       <Text>------------------------------------------</Text>
@@ -199,6 +254,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  container: {
+      paddingTop: 40,
+      flex: 1, // 
+  },
+  header: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      paddingHorizontal: 16,
+  },
+  animatedWrapper: {
+      overflow: 'hidden', 
+  },
+  contentContainer: {
+      position: 'absolute', 
+      top: 0, 
+      width: '100%',
+  }
 });
 
 export default Index;

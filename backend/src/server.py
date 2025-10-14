@@ -15,6 +15,7 @@ dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
 key = os.getenv('EXPO_PUBLIC_BETA')
+key2 = os.getenv('EXPO_PUBLIC_SIGMA')
 
 app = Flask(__name__)
 CORS(app)
