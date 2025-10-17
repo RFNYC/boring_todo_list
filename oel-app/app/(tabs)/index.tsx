@@ -196,6 +196,7 @@ const ListComponent = ({listItem}) => {
       >
         <AnimatedAccordionContent isExpanded={expanded}>
           <List.Item
+            title={"Instructions:"}
             left={props => <ButtonComponent listItem={listItem}/>}
             descriptionNumberOfLines={10}
             description={listItem.desc}
@@ -205,31 +206,10 @@ const ListComponent = ({listItem}) => {
   );
 };
 
-const MyComponent = () => (
-  <IconButton
-    icon="camera"
-    iconColor={MD3Colors.error50}
-    size={20}
-    onPress={() => console.log('Pressed')}
-  />
-);
 
   return (
     <>
-    <View
-      style={{
-        flex: .8,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Hello world!</Text>
-      <Pressable onPress={() => storeData(JSON.stringify(listData))}>
-        <Text>save</Text>
-      </Pressable>
-      <Pressable onPress={() => getData()}>
-        <Text>get</Text>
-      </Pressable>
+    <View>
       <Text>-----------------------------------------</Text>
       <FlatList data={listData} renderItem={({item}) => (
         <View>

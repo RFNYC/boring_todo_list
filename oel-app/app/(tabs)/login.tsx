@@ -15,7 +15,7 @@ export default function login() {
     const [my_password, setPassword] = useState('Enter your password')
 
     const makeCreatePOSTcall = (email_address: string, my_password: string) => {
-      return fetch(`http://${SIGMA}/user`, {
+      return fetch(`http://${BETA}/user`, {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -45,7 +45,7 @@ export default function login() {
   const handleLogin = async (email_address: string, my_password: string) => {
     let result = await makeCreatePOSTcall(email_address, my_password)
     if (result['login'] == true){
-      router.navigate('/')
+      router.navigate('/taskcomponent')
     } else {
       console.log("Login unsuccesssful please try again.")
     }

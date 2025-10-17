@@ -35,16 +35,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Create Tasks',
           animation:"shift",
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
-        }}
-      />
-      
-      <Tabs.Screen
-        name="apicall"
-        options={{
-          title: 'apicall',
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
         }}
       />
@@ -52,8 +44,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="taskcomponent"
         options={{
-          title: 'taskScreen2',
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+          animation:"shift",
+          title: 'Home',
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,
           headerShown: false
         }}
       />

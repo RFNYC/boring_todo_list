@@ -66,3 +66,11 @@ def registry():
 
         print(x['name'])
         return "<p>Registry POST</p>"
+
+
+let logged be a boolean var
+
+if logged true: do x, else: do y
+
+  var    ?  true scenario :  false scenario
+{ logged ? <Text>Hello World</Text> : <Text>Goodbye World</Text>}
